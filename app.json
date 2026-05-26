@@ -1,0 +1,45 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/community/community",
+    "pages/route/route",
+    "pages/test/test",
+    "pages/plan/plan",
+    "pages/post/post"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#2B4C6F",
+    "navigationBarTitleText": "水行迹",
+    "navigationBarTextStyle": "white"
+  },
+  "lazyCodeLoading": "requiredComponents",
+  "tabBar": {
+    "custom": true,
+    "color": "#91AAB4",
+    "selectedColor": "#00F3FF",
+    "backgroundColor": "#0A1128",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/community/community",
+        "text": "星港社区"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "深空驿站"
+      },
+      {
+        "pagePath": "pages/plan/plan",
+        "text": "航行日志"
+      },
+      {
+        "pagePath": "pages/route/route",
+        "text": "星系图"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
