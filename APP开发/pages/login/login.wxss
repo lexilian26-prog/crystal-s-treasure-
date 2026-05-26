@@ -1,0 +1,103 @@
+.login-container {
+  height: 100vh;
+  background-color: #E6ECF2; /* 浅灰蓝底色 */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.hero-section {
+  height: 45vh; /* 压缩顶部 Logo 区域高度 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50rpx;
+}
+
+.main-logo {
+  width: 800rpx;
+  height: 800rpx;
+  filter: drop-shadow(0 20rpx 40rpx rgba(43, 76, 111, 0.15));
+  animation: float 4s ease-in-out infinite;
+  margin-top: 0;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20rpx); }
+}
+
+.login-bg-section {
+  position: relative;
+  height: 55vh;
+  width: 100%;
+  background-color: #2B4C6F; /* 深灰蓝 */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 100rpx;
+  border-top-left-radius: 60rpx;
+  border-top-right-radius: 60rpx;
+}
+
+.login-controls {
+  width: 80%;
+  text-align: center;
+  z-index: 10;
+}
+
+.app-title {
+  font-size: 56rpx;
+  font-weight: bold;
+  color: #ffffff;
+  letter-spacing: 8rpx;
+  margin-bottom: 10rpx;
+}
+
+.app-subtitle {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 60rpx;
+}
+
+.btn-login-main {
+  background-color: #ffffff;
+  color: #2B4C6F;
+  border-radius: 50rpx;
+  height: 100rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 30rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  width: 100% !important;
+}
+
+.btn-login-sub {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1rpx solid rgba(255, 255, 255, 0.3);
+  border-radius: 50rpx;
+  height: 100rpx;
+  font-size: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  width: 100% !important;
+}
+
+.agreement {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 40rpx;
+}
+
+.link {
+  color: #ffffff;
+  text-decoration: underline;
+}

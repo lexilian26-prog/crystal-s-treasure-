@@ -1,0 +1,102 @@
+<view class="container">
+  <!-- 顶部导航：缩小头像 + 搜索栏 -->
+  <view class="header">
+    <view class="header-left" bindtap="toggleSidebar">
+      <image class="mini-avatar" src="{{userInfo.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=traveler'}}"></image>
+    </view>
+    <view class="search-bar">
+      <icon type="search" size="14" color="#91AAB4"></icon>
+      <input class="search-input" placeholder="搜索帖子或频道..." placeholder-class="search-placeholder" confirm-type="search" />
+    </view>
+    <view class="header-right">
+      <view class="notification-dot"></view>
+      <text class="icon-bell">🔔</text>
+    </view>
+  </view>
+
+  <!-- 主内容区 -->
+  <scroll-view scroll-y class="main-scroll-view">
+    
+    <!-- 航行日志共享站 (Voyage Log Sharing) -->
+    <view class="log-sharing-section">
+      <view class="section-header">
+        <view class="section-title-group">
+          <text class="section-title">航行日志共享站</text>
+          <text class="section-subtitle">分享你的星际足迹</text>
+        </view>
+        <text class="more-link">查看全部 ></text>
+      </view>
+      
+      <scroll-view scroll-x class="log-scroll" enhanced show-scrollbar="{{false}}">
+        <view class="log-card" wx:for="{{voyageLogs}}" wx:key="id">
+          <image class="log-image" src="{{item.image}}" mode="aspectFill"></image>
+          <view class="log-overlay">
+            <view class="log-info">
+              <view class="log-user-box">
+                <image class="log-user-avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed={{item.user}}"></image>
+                <text class="log-user">{{item.user}}</text>
+              </view>
+              <text class="log-content">{{item.content}}</text>
+            </view>
+            <view class="log-footer">
+              <view class="log-tags">
+                <text class="log-tag"># {{item.tag}}</text>
+              </view>
+              <view class="log-likes">
+                <text class="icon-heart">❤️</text>
+                <text class="likes-count">{{item.likes}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 星际通讯频道列表 -->
+    <view class="communication-channels">
+      <view class="section-header">
+        <text class="section-title">星际通讯频道</text>
+        <text class="more-link">实时互动中 ></text>
+      </view>
+      
+      <view class="channel-grid">
+        <view class="channel-card" wx:for="{{channels}}" wx:key="id">
+          <view class="channel-img-wrapper">
+            <image class="channel-img" src="{{item.image}}" mode="aspectFill"></image>
+            <view class="channel-tag">{{item.tag}}</view>
+            <view class="live-indicator">
+              <view class="live-dot"></view> LIVE
+            </view>
+          </view>
+          <view class="channel-info">
+            <view class="channel-name">{{item.name}}</view>
+            <view class="channel-meta">
+              <image class="channel-avatar" src="{{item.lastUserAvatar}}"></image>
+              <text class="channel-last-post">{{item.lastPost}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 侧边栏 -->
+  <view class="sidebar {{showSidebar ? 'active' : ''}}">
+    <view class="sidebar-mask" bindtap="toggleSidebar"></view>
+    <view class="sidebar-content">
+      <view class="user-profile-edit">
+        <image class="large-avatar" src="{{userInfo.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=traveler'}}"></image>
+        <view class="nickname-edit">
+          <input value="{{userInfo.nickName || '旅行者'}}" bindinput="updateNickname" placeholder="输入昵称" />
+        </view>
+      </view>
+      <view class="menu-list">
+        <view class="menu-item highlight" bindtap="goToPlan" data-tab="trip">🚀 我的行程</view>
+        <view class="menu-item create-btn" bindtap="goToPlan" data-tab="trip">➕ 开始新旅程</view>
+        <view class="menu-item">通讯协议 <text class="version">v1.2.0</text></view>
+        <view class="menu-item">设置</view>
+        <view class="menu-item logout" bindtap="logout">断开连接</view>
+      </view>
+    </view>
+  </view>
+</view>

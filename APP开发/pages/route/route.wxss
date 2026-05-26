@@ -1,0 +1,517 @@
+.container {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 核心配色方案重构 - 基于水行迹色卡 */
+.container.mode-day {
+  background: linear-gradient(180deg, var(--color-light-blue) 0%, var(--white) 100%);
+}
+
+.container.mode-night {
+  background: linear-gradient(180deg, var(--color-dark-blue-2) 0%, var(--color-dark-blue-1) 100%);
+}
+
+.mode-day .header-title, .mode-day .back-icon {
+  color: var(--color-dark-blue-1);
+}
+
+.mode-night .header-title, .mode-night .back-icon {
+  color: var(--white);
+}
+
+/* 路线路径颜色调整 */
+.node-wrapper::before {
+  border-color: var(--color-grey-blue-3);
+  opacity: 0.6;
+}
+
+.mode-night .node-wrapper::before {
+  border-color: var(--white);
+  box-shadow: 0 0 15rpx rgba(255,255,255,0.3);
+}
+
+/* 拍立得卡片调整 */
+.photo-card {
+  background: var(--white);
+  border: 4rpx solid var(--white);
+  box-shadow: 0 8rpx 30rpx rgba(145, 170, 180, 0.2);
+}
+
+.mode-night .photo-card {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.p-name {
+  color: var(--color-dark-blue-2);
+}
+
+.p-desc {
+  color: var(--color-grey-blue-3);
+}
+
+/* 底部操作区 */
+.route-footer-actions {
+  background: linear-gradient(to top, var(--color-dark-blue-1), transparent);
+}
+
+.footer-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1rpx solid rgba(255, 255, 255, 0.3);
+  color: var(--white);
+}
+
+.add-btn-circle {
+  background: var(--color-dark-blue-2);
+  box-shadow: 0 4rpx 20rpx rgba(74, 101, 122, 0.4);
+}
+
+/* 城市标签 */
+.city-pill {
+  background: var(--white);
+  color: var(--color-dark-blue-1);
+  box-shadow: 0 4rpx 15rpx rgba(145, 170, 180, 0.15);
+}
+
+/* --- 背景装饰 --- */
+.dynamic-bg {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 0;
+}
+
+/* 云朵动画 (白天) */
+.cloud {
+  position: absolute;
+  background: #FFFFFF;
+  filter: blur(40px);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: cloud-float 20s linear infinite;
+}
+.cloud-1 { 
+  width: 500rpx; height: 250rpx; 
+  top: 15%; 
+  left: -200rpx; 
+}
+.cloud-2 { 
+  width: 400rpx; height: 200rpx; 
+  top: 45%; 
+  right: -150rpx; 
+  animation-delay: -5s;
+  animation-duration: 25s;
+}
+
+@keyframes cloud-float {
+  0% { transform: translateX(0) translateY(0); }
+  33% { transform: translateX(50rpx) translateY(20rpx); }
+  66% { transform: translateX(-30rpx) translateY(40rpx); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+/* 星空动画 (晚上) */
+.star {
+  position: absolute;
+  width: 2rpx; height: 2rpx;
+  background: #FFFFFF;
+  border-radius: 50%;
+  animation: twinkle 2s infinite;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+
+/* --- 顶部导航 --- */
+.route-header {
+  position: relative;
+  z-index: 10;
+  padding: 100rpx 40rpx 30rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.back-icon { font-size: 36rpx; margin-right: 20rpx; }
+.header-title { font-size: 34rpx; font-weight: 500; }
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.theme-toggle-btn {
+  width: 64rpx;
+  height: 64rpx;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s;
+}
+
+.mode-day .theme-toggle-btn {
+  background: rgba(43, 76, 111, 0.1);
+  border-color: rgba(43, 76, 111, 0.2);
+}
+
+.toggle-icon {
+  font-size: 32rpx;
+}
+
+.info-icon {
+  width: 44rpx; height: 44rpx;
+  border: 2rpx solid currentColor;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24rpx;
+}
+
+/* --- 内容区域 --- */
+.route-scroll-view {
+  height: calc(100vh - 180rpx);
+  position: relative;
+  z-index: 5;
+}
+
+.route-top-info {
+  padding: 20rpx 40rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.city-pill {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(10px);
+  padding: 12rpx 30rpx;
+  border-radius: 40rpx;
+  display: flex;
+  align-items: center;
+  font-size: 26rpx;
+  box-shadow: 0 4rpx 15rpx rgba(0,0,0,0.05);
+}
+
+.mode-night .city-pill {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+.pill-icon { margin-right: 10rpx; }
+.pill-arrow { margin-left: 10rpx; font-size: 20rpx; }
+
+.top-planet {
+  width: 500rpx; 
+  height: 500rpx;
+  margin-top: -120rpx;
+  margin-right: -100rpx;
+  animation: float 8s ease-in-out infinite;
+  filter: drop-shadow(0 30rpx 60rpx rgba(145, 170, 180, 0.5));
+  opacity: 0.98;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15rpx); }
+}
+
+/* --- S型路线核心区域 --- */
+.s-route-container {
+  position: relative;
+  padding: 60rpx 0 300rpx;
+  min-height: 1800rpx;
+}
+
+/* 移除直线，改用背景波纹或动态路径 */
+.dashed-line {
+  display: none;
+}
+
+.route-nodes {
+  position: relative;
+  width: 100%;
+}
+
+/* 每个节点容器 - 统一居中对齐 */
+.node-wrapper {
+  position: relative;
+  width: 100%;
+  height: 400rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 核心修复：所有节点先居中 */
+  z-index: 5;
+}
+
+/* 核心 S 曲线绘制 */
+.node-wrapper::before {
+  content: '';
+  position: absolute;
+  width: 70rpx; /* 曲线摆幅 */
+  height: 100%;
+  border: 8rpx solid rgba(142, 154, 175, 0.4);
+  z-index: 1;
+}
+
+.node-wrapper::after {
+  content: '';
+  position: absolute;
+  width: 70rpx;
+  height: 100%;
+  border: 6rpx dashed #FFFFFF;
+  z-index: 2;
+  filter: drop-shadow(0 0 5rpx rgba(255,255,255,0.8));
+}
+
+/* 左侧节点 - 向左推开 */
+.node-wrapper.left .photo-card {
+  margin-right: 140rpx;
+  transform: rotate(-3deg);
+}
+
+.node-wrapper.left::before, .node-wrapper.left::after {
+  left: 50%;
+  border-right: 0;
+  border-radius: 200rpx 0 0 200rpx;
+  transform: translateX(-100%);
+}
+
+/* 右侧节点 - 向右推开 */
+.node-wrapper.right .photo-card {
+  margin-left: 140rpx;
+  transform: rotate(3deg);
+}
+
+.node-wrapper.right::before, .node-wrapper.right::after {
+  left: 50%;
+  border-left: 0;
+  border-radius: 0 200rpx 200rpx 0;
+  transform: translateX(0);
+}
+
+/* 节点圆点 (星体) 定位 */
+.node-dot-container {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+}
+
+.node-wrapper.left .node-dot-container {
+  left: calc(50% - 70rpx - 22rpx);
+}
+
+.node-wrapper.right .node-dot-container {
+  left: calc(50% + 70rpx - 22rpx);
+}
+
+/* 拍立得照片卡片优化 - 缩小尺寸 */
+.photo-card {
+  width: 240rpx; /* 显著缩小卡片宽度 */
+  padding: 12rpx;
+  background: #fff;
+  border-radius: 12rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0,0,0,0.1);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  z-index: 10;
+}
+
+/* 左右偏移与旋转 */
+.node-wrapper.left .photo-card {
+  transform: rotate(-3deg) translateX(0);
+}
+
+.node-wrapper.right .photo-card {
+  transform: rotate(3deg) translateX(0);
+}
+
+/* 缩小图片高度 */
+.photo-img {
+  width: 100%;
+  height: 180rpx; /* 缩小图片高度 */
+  border-radius: 8rpx;
+  margin-bottom: 12rpx;
+  object-fit: cover;
+}
+
+/* 缩小文字大小 */
+.p-name { 
+  font-size: 26rpx; 
+  font-weight: bold; 
+  display: block; 
+  margin-bottom: 4rpx; 
+  color: inherit;
+}
+
+.p-desc { 
+  font-size: 18rpx; 
+  line-height: 1.3;
+  opacity: 0.7;
+}
+
+/* 节点圆点位置调整 */
+.node-wrapper.left .node-dot-container {
+  left: calc(50% - 180rpx);
+}
+
+.node-wrapper.right .node-dot-container {
+  left: calc(50% + 180rpx);
+}
+
+/* 节点圆点样式增强 */
+.node-dot-outer {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  border: 4rpx solid #2B4C6F;
+  box-shadow: 0 0 20rpx rgba(43, 76, 111, 0.3);
+}
+
+.mode-night .node-dot-outer {
+  background: #1E293B;
+  border-color: #fff;
+  box-shadow: 0 0 30rpx rgba(255, 255, 255, 0.5);
+}
+
+.node-dot-inner {
+  width: 18rpx;
+  height: 18rpx;
+  border-radius: 50%;
+  background: #2B4C6F;
+}
+
+.mode-night .node-dot-inner {
+  background: #fff;
+  box-shadow: 0 0 10rpx #fff;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* 标签位置优化 */
+.node-tag {
+  position: absolute;
+  top: -40rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20rpx;
+  background: rgba(43, 76, 111, 0.9);
+  color: #fff;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  white-space: nowrap;
+  z-index: 25;
+}
+
+.mode-night .node-tag {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+}
+
+/* 增加星云漂浮感 */
+.nebula {
+  position: absolute;
+  width: 800rpx;
+  height: 800rpx;
+  background: radial-gradient(circle, rgba(142, 154, 175, 0.1) 0%, transparent 70%);
+  filter: blur(80px);
+  animation: float-nebula 25s linear infinite;
+}
+
+@keyframes float-nebula {
+  0% { transform: translate(-10%, -10%) rotate(0deg); }
+  50% { transform: translate(10%, 10%) rotate(180deg); }
+  100% { transform: translate(-10%, -10%) rotate(360deg); }
+}
+
+/* 星际旅行背景增强 (Night Mode Only) */
+.mode-night .star-bg::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, #eee, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 40px 70px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 50px 160px, #ddd, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 80px 120px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 110px 10px, #ccc, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  opacity: 0.3;
+}
+
+/* --- 底部操作区 --- */
+.route-footer-actions {
+  display: flex;
+  justify-content: space-around; /* 改为 space-around，让按钮均匀分布 */
+  align-items: center;
+  padding: 40rpx 60rpx 100rpx;
+}
+
+.footer-btn {
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(10px);
+  padding: 20rpx 40rpx;
+  border-radius: 50rpx;
+  display: flex;
+  align-items: center;
+  font-size: 28rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0,0,0,0.05);
+}
+
+.mode-night .footer-btn {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+.f-btn-icon { margin-right: 15rpx; }
+.f-btn-arrow { margin-left: 15rpx; opacity: 0.5; }
+
+.add-btn-circle {
+  width: 100rpx; height: 100rpx;
+  background: #2B4C6F;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50rpx;
+  box-shadow: 0 10rpx 30rpx rgba(43, 76, 111, 0.3);
+}
+
+/* --- 详情面板 (同前) --- */
+.detail-panel {
+  position: fixed;
+  bottom: -500rpx;
+  left: 0; width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 50rpx;
+  border-radius: 40rpx 40rpx 0 0;
+  transition: 0.4s;
+  z-index: 100;
+  color: #333;
+}
+.detail-panel.show { bottom: 0; }

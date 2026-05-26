@@ -1,0 +1,90 @@
+<view class="container">
+  <scroll-view scroll-y class="article-scroll">
+    <view class="cover">
+      <view class="wuxing-cover big">
+        <view class="wuxing-orb wood"></view>
+        <view class="wuxing-orb fire"></view>
+        <view class="wuxing-orb earth"></view>
+        <view class="wuxing-orb metal"></view>
+        <view class="wuxing-orb water"></view>
+        <view class="wuxing-trail"></view>
+      </view>
+    </view>
+
+    <view class="article-header">
+      <view class="tag">{{post.tag}}</view>
+      <view class="title">{{post.title}}</view>
+      <view class="sub">{{post.subTitle}}</view>
+      <view class="meta">
+        <text class="author">{{post.author}}</text>
+        <text class="time">{{post.time}}</text>
+      </view>
+    </view>
+
+    <view class="article-body">
+      <view class="block" wx:for="{{post.blocks}}" wx:key="index">
+        <text class="p">{{item}}</text>
+      </view>
+    </view>
+
+    <view class="comment-section" id="comments">
+      <view class="comment-title">评论 {{commentCount}}</view>
+      <view class="comment-empty" wx:if="{{comments.length === 0}}">暂无评论，来抢沙发</view>
+      <view class="comment-item" wx:for="{{comments}}" wx:key="id" bindlongpress="onLongPressComment" data-id="{{item.id}}">
+        <image class="c-avatar" src="{{item.avatarUrl}}"></image>
+        <view class="c-main">
+          <view class="c-top">
+            <text class="c-name">{{item.nickName}}</text>
+            <text class="c-time">{{item.time}}</text>
+          </view>
+          <view class="c-text">{{item.content}}</view>
+          <view class="c-actions">
+            <view class="c-action {{item.liked ? 'active' : ''}}" bindtap="toggleCommentLike" data-id="{{item.id}}">
+              <text class="c-action-icon">♥</text>
+              <text class="c-action-text">{{item.likes || 0}}</text>
+            </view>
+            <view class="c-action" bindtap="startReply" data-id="{{item.id}}" data-name="{{item.nickName}}">
+              <text class="c-action-icon">💬</text>
+              <text class="c-action-text">回复</text>
+              <text class="c-action-sub" wx:if="{{item.replies && item.replies.length}}">{{item.replies.length}}</text>
+            </view>
+          </view>
+
+          <view class="reply-list" wx:if="{{item.replies && item.replies.length}}">
+            <view class="reply-item" wx:for="{{item.replies}}" wx:for-item="r" wx:key="id" bindlongpress="onLongPressReply" data-cid="{{item.id}}" data-rid="{{r.id}}">
+              <image class="r-avatar" src="{{r.avatarUrl}}"></image>
+              <view class="r-main">
+                <view class="r-top">
+                  <text class="r-name">{{r.nickName}}</text>
+                  <text class="r-time">{{r.time}}</text>
+                </view>
+                <view class="r-text">{{r.content}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="action-bar">
+    <view class="action-left">
+      <view class="action-btn {{liked ? 'active' : ''}}" bindtap="toggleLike">
+        <text class="action-icon">♥</text>
+        <text class="action-text">{{likeCount}}</text>
+      </view>
+      <view class="action-btn" bindtap="focusComment">
+        <text class="action-icon">💬</text>
+        <text class="action-text">{{commentCount}}</text>
+      </view>
+    </view>
+    <button class="share-btn" open-type="share">转发</button>
+  </view>
+
+  <view class="comment-input-bar">
+    <view class="replying-pill" wx:if="{{replyToId}}" bindtap="cancelReply">回复 {{replyToName}} ✕</view>
+    <input class="comment-input" placeholder="{{replyToId ? ('回复 ' + replyToName + '…') : '写评论…'}}" value="{{draftComment}}" bindinput="onInputComment" confirm-type="send" bindconfirm="submitComment"></input>
+    <view class="send-btn" bindtap="submitComment">发送</view>
+  </view>
+</view>
+

@@ -1,0 +1,122 @@
+<view class="container">
+  <view class="view-header">
+    <view class="tab-switcher">
+      <view class="tab-item {{activeTab === 'trip' ? 'active' : ''}}" bindtap="switchTab" data-tab="trip">行程</view>
+      <view class="tab-item {{activeTab === 'todo' ? 'active' : ''}}" bindtap="switchTab" data-tab="todo">待办</view>
+    </view>
+    <view class="add-trip-btn-mini" bindtap="{{activeTab === 'trip' ? 'showCreateModal' : 'addTodo'}}">＋</view>
+  </view>
+
+  <!-- 行程板块 -->
+  <scroll-view scroll-y class="trip-list-inner" wx:if="{{activeTab === 'trip'}}">
+    <block wx:for="{{trips}}" wx:key="id" wx:for-index="tIdx">
+      <view class="trip-card">
+        <view class="trip-header">
+          <input class="trip-title-input" value="{{item.title}}" bindinput="updateTripTitle" data-tidx="{{tIdx}}" />
+          <view class="trip-header-right">
+            <view class="delete-trip-btn" bindtap="deleteTrip" data-tidx="{{tIdx}}">✕</view>
+          </view>
+        </view>
+        
+        <!-- 成员列表 -->
+        <view class="trip-members-section">
+          <view class="member-list">
+            <image class="member-avatar" wx:for="{{item.members}}" wx:for-item="member" wx:key="index" src="{{member.avatarUrl}}"></image>
+            <button class="add-member-btn" open-type="share" data-tidx="{{tIdx}}">+</button>
+          </view>
+          <text class="member-count">{{item.members.length}} 位参与者</text>
+        </view>
+        <view class="trip-details">
+          <view class="detail-item" wx:for="{{item.plan}}" wx:for-item="step" wx:key="index" wx:for-index="sIdx">
+            <view class="step-main">
+              <view class="step-time-loc">
+                <input class="time-input" value="{{step.time}}" bindinput="updateStep" data-tidx="{{tIdx}}" data-sidx="{{sIdx}}" data-field="time" />
+                <input class="loc-input" value="{{step.location}}" bindinput="updateStep" data-tidx="{{tIdx}}" data-sidx="{{sIdx}}" data-field="location" />
+              </view>
+              <view class="step-actions">
+                <view class="step-link-btn" bindtap="editStepLink" data-tidx="{{tIdx}}" data-sidx="{{sIdx}}">🔗</view>
+                <view class="step-star-btn {{step.starred ? 'active' : ''}} {{step.animating ? 'star-pop-anim' : ''}}" bindtap="voteStep" data-tidx="{{tIdx}}" data-sidx="{{sIdx}}">
+                  <text class="star-icon">★</text>{{step.stars || 0}}
+                </view>
+                <view class="step-delete-btn" bindtap="deleteStep" data-tidx="{{tIdx}}" data-sidx="{{sIdx}}">✕</view>
+              </view>
+            </view>
+            <!-- 行程链接列表 -->
+            <view class="step-links-list" wx:if="{{step.links && step.links.length > 0}}">
+              <view class="todo-link-item" wx:for="{{step.links}}" wx:for-item="link" wx:for-index="lidx" wx:key="lidx">
+                <text class="todo-link-name" bindtap="openLink" data-url="{{link.url}}">{{link.name}}</text>
+                <text class="todo-link-del" bindtap="deleteLink" data-tidx="{{tIdx}}" data-sidx="{{sIdx}}" data-lidx="{{lidx}}">✕</text>
+              </view>
+            </view>
+          </view>
+          <view class="add-step-line" bindtap="addStep" data-tidx="{{tIdx}}">+ 添加新地点</view>
+        </view>
+      </view>
+    </block>
+    <view class="empty-state" wx:if="{{trips.length === 0}}">暂无行程，点击右上角开始新旅程</view>
+  </scroll-view>
+
+  <!-- 待办板块 -->
+  <view class="todo-view-container" wx:if="{{activeTab === 'todo'}}">
+    <!-- 行程选择器 -->
+    <scroll-view scroll-x class="trip-selector" enhanced show-scrollbar="{{false}}" wx:if="{{trips.length > 0}}">
+      <view class="trip-select-item {{selectedTripIdx === index ? 'active' : ''}}" 
+            wx:for="{{trips}}" wx:key="id" 
+            bindtap="selectTripForTodo" data-idx="{{index}}">
+        {{item.title}}
+      </view>
+    </scroll-view>
+
+    <!-- 进度条 -->
+    <view class="progress-section" wx:if="{{trips.length > 0}}">
+      <view class="progress-info">
+        <text class="progress-label">当前行程进度</text>
+        <text class="progress-percentage">{{todoProgress}}%</text>
+      </view>
+      <view class="progress-bar-bg">
+        <view class="progress-bar-fill" style="width: {{todoProgress}}%"></view>
+      </view>
+    </view>
+
+    <scroll-view scroll-y class="todo-list-inner" wx:if="{{trips.length > 0}}">
+      <view class="todo-card" wx:for="{{trips[selectedTripIdx].todoList}}" wx:key="id">
+        <view class="todo-checkbox {{item.completed ? 'checked' : ''}}" bindtap="toggleTodo" data-id="{{item.id}}">
+          <icon type="success_no_circle" size="14" color="#fff" wx:if="{{item.completed}}"></icon>
+        </view>
+        <view class="todo-content">
+          <input class="todo-task-input {{item.completed ? 'completed' : ''}}" value="{{item.task}}" bindinput="updateTodoTask" data-id="{{item.id}}" />
+          <view class="todo-meta">
+            <text class="todo-at">@</text>
+            <picker bindchange="selectTodoMember" value="{{0}}" range="{{trips[selectedTripIdx].members}}" range-key="nickName" data-id="{{item.id}}">
+              <view class="todo-member-display">{{item.member || '未分配'}}</view>
+            </picker>
+            <view class="todo-link-add" bindtap="editTodoLink" data-id="{{item.id}}">🔗</view>
+          </view>
+          <!-- 待办链接列表 -->
+          <view class="todo-links-list" wx:if="{{item.links && item.links.length > 0}}">
+            <view class="todo-link-item" wx:for="{{item.links}}" wx:for-item="link" wx:for-index="lidx" wx:key="lidx">
+              <text class="todo-link-name" bindtap="openLink" data-url="{{link.url}}">{{link.name}}</text>
+              <text class="todo-link-del" bindtap="deleteTodoLink" data-id="{{item.id}}" data-lidx="{{lidx}}">✕</text>
+            </view>
+          </view>
+        </view>
+        <view class="todo-delete" bindtap="deleteTodo" data-id="{{item.id}}">✕</view>
+      </view>
+      <view class="empty-todo" wx:if="{{trips[selectedTripIdx].todoList.length === 0}}">该行程暂无待办事项，点击右上角添加</view>
+    </scroll-view>
+    <view class="empty-state" wx:else>请先在“行程”板块创建旅程</view>
+  </view>
+
+  <!-- 链接编辑弹窗 -->
+  <view class="modal" wx:if="{{showLinkModal}}">
+    <view class="modal-content">
+      <view class="modal-title">添加外部攻略链接</view>
+      <input class="modal-input" placeholder="输入链接名称" bindinput="inputLinkName" value="{{editingLinkName}}" />
+      <input class="modal-input" placeholder="输入链接地址" bindinput="inputLinkUrl" value="{{editingLinkUrl}}" />
+      <view class="modal-btns">
+        <button class="m-btn cancel" bindtap="closeLinkModal">取消</button>
+        <button class="m-btn confirm" bindtap="saveStepLink">确定</button>
+      </view>
+    </view>
+  </view>
+</view>

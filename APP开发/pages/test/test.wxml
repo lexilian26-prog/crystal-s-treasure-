@@ -1,0 +1,108 @@
+<view class="container">
+  <!-- 顶部状态栏 -->
+  <view class="test-header">
+    <view class="back-btn" bindtap="back">❮ 返回</view>
+    <view class="header-title">Travelti</view>
+  </view>
+
+  <!-- 开始页面 -->
+  <view class="start-view" wx:if="{{status === 'start'}}">
+    <view class="pixel-logo">TRAVELTI</view>
+    <view class="pixel-aliens">
+      <image class="header-alien" src="/alien/Starchart Navigator_星图导航员.jpg" mode="aspectFit"></image>
+      <image class="header-alien" src="/alien/Galactic Diplomat_星际外交官.jpg" mode="aspectFit"></image>
+      <image class="header-alien" src="/alien/Wormhole Drifter_虫洞漂流者.jpg" mode="aspectFit"></image>
+    </view>
+    <view class="test-intro">
+      <view class="main-title">星际旅行者人格测试</view>
+      <view class="sub-title">" 这一次，开启你的星际航行 "</view>
+      <view class="desc-box">
+        <text class="desc-title">测试说明</text>
+        <text class="desc-content">本测试模拟你驾驶私人飞船进行一次为期 7 个标准日的银河系自由行，通过 15 个真实航行场景，从跃迁规划、星际社交、星球探索、能量消费、航行意义五个维度，诊断你的专属旅行人格。</text>
+      </view>
+    </view>
+    <button class="start-btn" bindtap="startTest">
+      <text class="btn-icon">▶</text> 开始测试
+    </button>
+  </view>
+
+  <!-- 测试中页面 -->
+  <view class="testing-view" wx:if="{{status === 'testing'}}">
+    <view class="progress-bar">
+      <view class="progress-inner" style="width: {{(currentIndex + 1) / questions.length * 100}}%"></view>
+    </view>
+    <view class="question-card">
+      <view class="q-header">
+        <view class="q-num">Q{{currentIndex + 1}}/{{questions.length}}</view>
+        <view class="prev-btn" wx:if="{{currentIndex > 0}}" bindtap="prevQuestion">
+          <text class="prev-icon">↺</text> 上一题
+        </view>
+      </view>
+      <view class="q-title">{{questions[currentIndex].title}}</view>
+      <view class="options-list">
+        <view 
+          class="option-item" 
+          wx:for="{{questions[currentIndex].options}}" 
+          wx:key="tag"
+          bindtap="selectOption"
+          data-tag="{{item.tag}}"
+        >
+          <view class="option-tag">{{item.tag}}</view>
+          <view class="option-text">{{item.text}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 结果页面 -->
+  <view class="result-view" wx:if="{{status === 'result'}}">
+    <view class="result-card">
+      <view class="result-tag">测试结果</view>
+      <view class="result-image-wrapper">
+        <scroll-view scroll-x class="persona-scroll" enhanced show-scrollbar="{{false}}" wx:if="{{finalResult.personas && finalResult.personas.length > 1}}">
+          <view class="persona-card" wx:for="{{finalResult.personas}}" wx:key="name">
+            <image class="persona-img" src="{{item.image}}" mode="aspectFit"></image>
+            <view class="persona-name">{{item.name}}</view>
+          </view>
+        </scroll-view>
+        <image class="result-personality-img" wx:else src="{{(finalResult.personas && finalResult.personas[0] && finalResult.personas[0].image) || finalResult.image}}" mode="aspectFit"></image>
+      </view>
+      <view class="result-name">{{finalResult.name}}</view>
+      
+      <view class="result-section">
+        <view class="section-label">🌌 深度解析</view>
+        <view class="section-content">{{finalResult.desc}}</view>
+      </view>
+
+      <view class="result-section">
+        <view class="section-label">✨ 核心特质</view>
+        <view class="section-content">{{finalResult.traits}}</view>
+      </view>
+
+      <view class="result-section">
+        <view class="section-label">🚀 典型行为</view>
+        <view class="section-content">{{finalResult.behavior}}</view>
+      </view>
+
+      <view class="result-section">
+        <view class="section-label">📍 推荐航线</view>
+        <view class="section-content">{{finalResult.dest}}</view>
+      </view>
+
+      <view class="result-section dislike-section" wx:if="{{finalResult.dislike}}">
+        <view class="section-label">❌ 不认同的 Travelti</view>
+        <view class="section-content">{{finalResult.dislike}}</view>
+      </view>
+
+      <view class="result-quote">
+        <text class="quote-icon">"</text>
+        <text>{{finalResult.quote}}</text>
+      </view>
+    </view>
+
+    <view class="result-btns">
+      <button class="restart-btn" bindtap="restart">重新测试</button>
+      <button class="share-btn" open-type="share">分享我的航迹</button>
+    </view>
+  </view>
+</view>

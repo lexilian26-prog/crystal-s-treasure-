@@ -1,0 +1,102 @@
+<view class="container {{isNight ? 'mode-night' : 'mode-day'}} theme-{{currentTheme}}">
+  <!-- 动态背景装饰 -->
+  <view class="dynamic-bg">
+    <view class="day-clouds" wx:if="{{!isNight}}">
+      <view class="cloud cloud-1"></view>
+      <view class="cloud cloud-2"></view>
+    </view>
+    <view class="star-bg" wx:if="{{isNight}}">
+      <view class="star" wx:for="{{30}}" wx:key="index" style="top:{{item*3}}%; left:{{(item*7)%100}}%"></view>
+      <view class="nebula"></view>
+    </view>
+  </view>
+
+  <!-- 顶部导航 -->
+  <view class="route-header">
+    <view class="header-left">
+      <text class="back-icon">〈</text>
+      <text class="header-title">旅游路线规划</text>
+    </view>
+    <view class="header-right">
+      <view class="theme-toggle-btn" bindtap="toggleDayNight">
+        <text class="toggle-icon">{{isNight ? '🌙' : '☀️'}}</text>
+      </view>
+      <view class="info-icon">ⓘ</view>
+    </view>
+  </view>
+
+  <scroll-view scroll-y class="route-scroll-view">
+    <view class="route-top-info">
+      <view class="city-pill" bindtap="selectTrip">
+        <text class="pill-icon">📍</text>
+        <text>{{trips[currentTripIndex].title || '选择行程'}}</text>
+        <text class="pill-arrow">⌵</text>
+      </view>
+      <image class="top-planet" src="../../水行迹纯logo(1).png" mode="aspectFit"></image>
+    </view>
+
+    <!-- S 型路线核心区域 -->
+    <view class="s-route-container">
+      <view class="s-path-svg">
+        <view class="dashed-line"></view>
+      </view>
+
+      <view class="route-nodes">
+        <view class="node-wrapper {{index % 2 === 0 ? 'left' : 'right'}}" 
+              wx:for="{{steps}}" 
+              wx:key="index">
+          <!-- 拍立得照片卡片 -->
+          <view class="photo-card" bindtap="showStepDetail" data-index="{{index}}">
+            <image class="photo-img" src="{{item.image || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400'}}" mode="aspectFill"></image>
+            <view class="photo-info">
+              <text class="p-name">{{item.location}}</text>
+              <text class="p-desc">{{item.desc}}</text>
+            </view>
+          </view>
+          <!-- 节点圆点 -->
+          <view class="node-dot-container">
+            <view class="node-dot-outer">
+              <view class="node-dot-inner"></view>
+            </view>
+          </view>
+          
+          <!-- 装饰按钮/标签 -->
+          <view class="node-tag" wx:if="{{index === 0}}">行程开始点</view>
+          <view class="node-tag" wx:if="{{index === 2}}">行程必打卡</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部操作区 -->
+    <view class="route-footer-actions">
+      <view class="footer-btn">
+        <text class="f-btn-icon">👣</text>
+        <text>旅游共享</text>
+        <text class="f-btn-arrow">〉</text>
+      </view>
+      <view class="footer-btn" bindtap="downloadLongImage">
+        <text class="f-btn-icon">📸</text>
+        <text>下载长图</text>
+        <text class="f-btn-arrow">〉</text>
+      </view>
+      <view class="add-btn-circle">+</view>
+    </view>
+  </scroll-view>
+
+  <!-- 详情浮窗保持原有逻辑 -->
+  <view class="detail-panel {{activeIndex !== -1 ? 'show' : ''}}">
+    <view class="panel-header">
+      <text class="p-time">{{steps[activeIndex].time}}</text>
+      <text class="p-close" bindtap="closeDetail">×</text>
+    </view>
+    <view class="p-location">{{steps[activeIndex].location}}</view>
+    <view class="p-desc">{{steps[activeIndex].desc}}</view>
+    <view class="p-footer">
+      <view class="p-btn">查看攻略</view>
+      <view class="p-btn">打卡点赞</view>
+    </view>
+  </view>
+
+  <!-- 隐藏的 canvas 组件用于截图 -->
+  <canvas canvas-id="myCanvas" style="width: {{canvasWidth}}px; height: {{canvasHeight}}px; position: fixed; left: -9999px; top: -9999px;"></canvas>
+</view>

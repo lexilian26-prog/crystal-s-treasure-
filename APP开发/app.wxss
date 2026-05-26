@@ -1,0 +1,63 @@
+/**app.wxss**/
+/* 全局配色变量基于水行迹色卡 */
+page {
+  /* 基础色系 */
+  --color-light-blue: #B3CDE0;    /* 最浅灰蓝 */
+  --color-grey-blue-1: #C4D2DB;   /* 浅灰蓝 */
+  --color-grey-blue-2: #A2B9C9;   /* 中浅灰蓝 */
+  --color-grey-blue-3: #91AAB4;   /* 中灰蓝 */
+  --color-grey-blue-4: #87A8C0;   /* 中深灰蓝 */
+  --color-dark-blue-1: #5F7D95;   /* 深灰蓝 */
+  --color-dark-blue-2: #4A657A;   /* 最深灰蓝 */
+  
+  /* 功能色映射 */
+  --primary-color: #5F7D95;       /* 主色调使用深灰蓝 */
+  --secondary-color: #87A8C0;     /* 次色调 */
+  --accent-color: #4A657A;        /* 强调色 */
+  --bg-color: #F5F7F9;            /* 页面背景底色，极浅灰 */
+  
+  /* 文本颜色 */
+  --text-primary: #2C3E50;        /* 极深灰，用于主标题 */
+  --text-regular: #4A657A;        /* 正文颜色 */
+  --text-light: #91AAB4;          /* 辅助/次要文字 */
+  
+  --white: #FFFFFF;
+  
+  background-color: var(--bg-color);
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica,
+    Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei',
+    sans-serif;
+  font-size: 28rpx;
+  color: var(--text-primary);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 40rpx;
+  padding: 20rpx 0;
+  font-weight: 500;
+  text-align: center;
+}
+
+.btn-secondary {
+  background-color: white;
+  color: var(--primary-color);
+  border: 1rpx solid var(--primary-color);
+  border-radius: 40rpx;
+  padding: 20rpx 0;
+  text-align: center;
+}
+
+/* 像素风工具类 */
+.pixel-border {
+  border: 4rpx solid #000;
+  box-shadow: 4rpx 4rpx 0 #000;
+}

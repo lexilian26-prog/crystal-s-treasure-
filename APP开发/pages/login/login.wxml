@@ -1,0 +1,26 @@
+<view class="container login-container">
+  <!-- 顶部大 Logo -->
+  <view class="hero-section">
+    <image class="main-logo" src="../../水行迹纯logo(1).png" mode="aspectFit"></image>
+  </view>
+
+  <!-- 底部纯色背景 -->
+  <view class="login-bg-section">
+    <!-- 登录操作区 -->
+    <view class="login-controls">
+      <view class="app-title">水行迹</view>
+      <view class="app-subtitle">旅游共享 · 灵感随行</view>
+      
+      <button class="btn-login-main" bindtap="handleWechatLogin">
+        微信一键登录
+      </button>
+      <button class="btn-login-sub" bindtap="handlePhoneLogin">
+        手机号登录/注册
+      </button>
+      
+      <view class="agreement">
+        登录即代表同意 <text class="link">《用户服务协议》</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,468 @@
+.container {
+  padding: 0;
+  background-color: #F5F7F9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.view-header {
+  display: flex;
+  align-items: center;
+  padding: 40rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #F0F4F7;
+}
+
+.tab-switcher {
+  display: flex;
+  background: #F1F4F7;
+  border-radius: 40rpx;
+  padding: 6rpx;
+  flex: 1;
+  max-width: 400rpx;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  font-size: 28rpx;
+  padding: 12rpx 0;
+  border-radius: 34rpx;
+  color: #91AAB4;
+  transition: all 0.3s;
+}
+
+.tab-item.active {
+  background: #fff;
+  color: #2B4C6F;
+  font-weight: bold;
+  box-shadow: 0 4rpx 10rpx rgba(0,0,0,0.05);
+}
+
+.add-trip-btn-mini {
+  margin-left: auto;
+  width: 60rpx;
+  height: 60rpx;
+  background: #2B4C6F;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+}
+
+/* 行程列表 */
+.trip-list-inner {
+  flex: 1;
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+
+.trip-card {
+  background: #fff;
+  border-radius: 25rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 8rpx 20rpx rgba(145, 170, 180, 0.1);
+  border: 1rpx solid #EDF2F6;
+}
+
+.trip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25rpx;
+}
+
+.trip-title-input {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #2B4C6F;
+  flex: 1;
+}
+
+.delete-trip-btn {
+  color: #ff4757;
+  font-size: 28rpx;
+  margin-left: 20rpx;
+  padding: 10rpx;
+}
+
+.detail-item {
+  background: #F8FAFB;
+  border-radius: 15rpx;
+  padding: 20rpx;
+  margin-bottom: 15rpx;
+}
+
+.step-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.step-time-loc {
+  display: flex;
+  gap: 15rpx;
+  flex: 1;
+}
+
+.time-input {
+  width: 100rpx;
+  font-size: 24rpx;
+  color: #91AAB4;
+}
+
+.loc-input {
+  flex: 1;
+  font-size: 26rpx;
+  color: #2B4C6F;
+}
+
+.step-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.step-star-btn {
+  font-size: 24rpx;
+  color: #4A5A6A; /* 深灰蓝色 */
+  transition: all 0.3s ease;
+}
+
+.step-star-btn.active {
+  color: #91AAB4; /* 普通浅灰蓝色 */
+}
+
+.star-icon {
+  display: inline-block;
+}
+
+.star-pop-anim .star-icon {
+  animation: star-pop 1s ease;
+}
+
+@keyframes star-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.5); }
+  100% { transform: scale(1); }
+}
+
+.step-delete-btn {
+  color: #ff4757;
+  font-size: 24rpx;
+  padding: 5rpx;
+}
+
+.add-step-line {
+  text-align: center;
+  padding: 20rpx;
+  font-size: 24rpx;
+  color: #91AAB4;
+  border: 2rpx dashed #EDF2F6;
+  border-radius: 15rpx;
+  margin-top: 10rpx;
+}
+
+/* 待办样式 */
+.todo-view-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20rpx 0;
+}
+
+.trip-selector {
+  white-space: nowrap;
+  padding: 20rpx 30rpx;
+  box-sizing: border-box;
+}
+
+.trip-select-item {
+  display: inline-block;
+  padding: 12rpx 30rpx;
+  background: #fff;
+  color: #91AAB4;
+  font-size: 24rpx;
+  border-radius: 30rpx;
+  margin-right: 20rpx;
+  border: 1rpx solid #F0F4F7;
+}
+
+.trip-select-item.active {
+  background: #2B4C6F;
+  color: #fff;
+  border-color: #2B4C6F;
+}
+
+.progress-section {
+  background: #F8FAFB;
+  padding: 30rpx;
+  border-radius: 30rpx;
+  margin: 0 30rpx 40rpx;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.progress-label {
+  font-size: 26rpx;
+  color: #2B4C6F;
+  font-weight: bold;
+}
+
+.progress-percentage {
+  font-size: 32rpx;
+  color: #2B4C6F;
+  font-weight: 800;
+}
+
+.progress-bar-bg {
+  height: 12rpx;
+  background: #EDF2F6;
+  border-radius: 6rpx;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, #2B4C6F, #91AAB4);
+  border-radius: 6rpx;
+  transition: width 0.5s ease-in-out;
+}
+
+.todo-list-inner {
+  flex: 1;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+}
+
+.todo-card {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  background: #fff;
+  border-radius: 25rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 15rpx rgba(145, 170, 180, 0.08);
+  border: 1rpx solid #F0F4F7;
+}
+
+.todo-checkbox {
+  width: 44rpx;
+  height: 44rpx;
+  border: 4rpx solid #EDF2F6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 25rpx;
+}
+
+.todo-checkbox.checked {
+  background: #2B4C6F;
+  border-color: #2B4C6F;
+}
+
+.todo-content {
+  flex: 1;
+}
+
+.todo-task-input {
+  font-size: 28rpx;
+  color: #2B4C6F;
+  margin-bottom: 6rpx;
+}
+
+.todo-task-input.completed {
+  text-decoration: line-through;
+  color: #91AAB4;
+}
+
+.todo-meta {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.trip-header-right {
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+}
+
+.trip-members-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+  padding: 15rpx 0;
+  border-bottom: 1rpx dashed #EDF2F6;
+}
+
+.member-list {
+  display: flex;
+  align-items: center;
+}
+
+.member-avatar {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  border: 2rpx solid #fff;
+  margin-right: -10rpx;
+  box-shadow: 0 2rpx 6rpx rgba(0,0,0,0.1);
+}
+
+.add-member-btn {
+  width: 44rpx !important;
+  height: 44rpx !important;
+  min-height: 44rpx !important;
+  border-radius: 50% !important;
+  background: #F1F4F7 !important;
+  color: #91AAB4 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 24rpx !important;
+  margin: 0 0 0 20rpx !important;
+  padding: 0 !important;
+  border: 1rpx dashed #91AAB4 !important;
+  line-height: 1 !important;
+}
+
+.add-member-btn::after {
+  border: none;
+}
+
+.member-count {
+  font-size: 20rpx;
+  color: #91AAB4;
+}
+
+.todo-member-display {
+  font-size: 22rpx;
+  color: #2B4C6F;
+  background: #F1F4F7;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.todo-member-input {
+  font-size: 22rpx;
+  color: #91AAB4;
+  width: 150rpx;
+}
+
+.todo-link-add {
+  font-size: 24rpx;
+  opacity: 0.6;
+}
+
+.todo-links-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-top: 15rpx;
+}
+
+.todo-link-item {
+  display: flex;
+  align-items: center;
+  background: #F1F4F7;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  gap: 8rpx;
+}
+
+.todo-link-name {
+  font-size: 20rpx;
+  color: #2B4C6F;
+  text-decoration: underline;
+}
+
+.todo-link-del {
+  font-size: 18rpx;
+  color: #91AAB4;
+}
+
+.todo-delete {
+  padding: 10rpx;
+  color: #EDF2F6;
+  font-size: 24rpx;
+}
+
+.todo-card:active .todo-delete {
+  color: #ff4757;
+}
+
+.empty-state, .empty-todo {
+  text-align: center;
+  color: #91AAB4;
+  font-size: 24rpx;
+  margin-top: 100rpx;
+}
+
+/* 弹窗 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: #fff;
+  width: 80%;
+  border-radius: 30rpx;
+  padding: 40rpx;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.modal-input {
+  background: #F8FAFB;
+  padding: 20rpx;
+  border-radius: 15rpx;
+  margin-bottom: 20rpx;
+  font-size: 28rpx;
+}
+
+.modal-btns {
+  display: flex;
+  gap: 20rpx;
+}
+
+.m-btn {
+  flex: 1;
+  font-size: 28rpx;
+}
+
+.m-btn.confirm {
+  background: #2B4C6F;
+  color: #fff;
+}
+
+.step-links-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-top: 10rpx;
+}

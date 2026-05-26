@@ -1,0 +1,75 @@
+<view class="container">
+  <!-- 顶部标题栏 -->
+  <view class="community-header">
+    <text class="header-side-title">社区页面</text>
+    <text class="header-main-title">社区</text>
+    <view class="header-icons">
+      <text class="icon-item">📜</text>
+      <text class="icon-item">🔍</text>
+    </view>
+  </view>
+
+  <!-- 顶部活动 Banner (像素风) -->
+  <view class="special-banner" bindtap="openFeaturedPost">
+    <view class="wuxing-cover">
+      <view class="wuxing-orb wood"></view>
+      <view class="wuxing-orb fire"></view>
+      <view class="wuxing-orb earth"></view>
+      <view class="wuxing-orb metal"></view>
+      <view class="wuxing-orb water"></view>
+      <view class="wuxing-trail"></view>
+    </view>
+    <view class="pixel-banner-content">
+      <text class="banner-tag">{{featuredPost.tag}}</text>
+      <view class="banner-main-title vertical">
+        <text>星轨漫游指南</text>
+        <text class="title-split">五行能量场的星际跃迁之旅</text>
+      </view>
+      <view class="banner-sub-title">{{featuredPost.subTitle}}</view>
+      <view class="read-pill">点击阅读推文</view>
+    </view>
+  </view>
+
+  <!-- 像素风测试入口 -->
+  <view class="test-entry-container">
+    <view class="test-entry-text">星际旅行者人格测试 (Travelti)</view>
+    <view class="test-entry-btn" bindtap="goToTest">
+      <view class="pixel-btn-inner">
+        <text class="pixel-icon">🚀</text>
+        <text>立即开启测试</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 推荐列表 -->
+  <view class="recommend-section">
+    <view class="section-header">
+      <text class="section-title">全主题旅游推荐</text>
+      <text class="more-link">查看更多 ></text>
+    </view>
+    
+    <view class="recommend-grid">
+      <view class="grid-item" wx:for="{{recommendations}}" wx:key="id">
+        <view class="grid-img-wrapper">
+          <image class="grid-img" src="{{item.image || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400'}}" mode="aspectFill"></image>
+          <view class="grid-tag-pill">{{item.tagShort}}</view>
+          <view class="grid-fav-icon">🤍</view>
+        </view>
+        <view class="grid-info">
+          <view class="grid-name">{{item.name}}</view>
+          <view class="grid-meta">
+            <text class="grid-location">📍 {{item.location}}</text>
+            <text class="grid-date">{{item.date}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部品牌标志 -->
+  <view class="bottom-brand">
+    <image class="brand-logo" src="../../水行迹纯logo(1).png" mode="aspectFit"></image>
+    <text class="brand-text">水行迹 | 探索山海，留下足迹</text>
+  </view>
+
+</view>
